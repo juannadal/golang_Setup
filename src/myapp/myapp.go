@@ -30,22 +30,18 @@ func main() {
 	if err != nil {
 		fmt.Print(err)
 	}
-
+	//check postgres to see if table exists
 	var checkDatabase string
 	db.QueryRow("SELECT to_regclass('public.youtube')").Scan(&checkDatabase)
 	if err != nil {
 		fmt.Print(err)
 	}
-
+	//if table dose not exist then create one to use for this example
 	if checkDatabase == ""{
 		fmt.Println("Database Created")
 		createSQL := "CREATE TABLE public.youtube (pk SERIAL PRIMARY KEY,fname character varying,lname character varying);"
 		db.Query(createSQL)
 	}
-
-
-
-
 
 	//sql to insert employee information
 	statement :="INSERT INTO youtube(fname, lname) VALUES($1, $2)"
